@@ -1,0 +1,30 @@
+{
+  "042": {
+    "activity_number": 0,
+    "kind": "exercise",
+    "task_number": 1,
+    "section_path": [],
+    "statement": "how?",
+    "salt": "042",
+    "formula": "salt_042 as token",
+    "solutions": [
+      {
+        "query": "SELECT foo",
+        "result_head": "",
+        "token": "4547"
+      }
+    ]
+  },
+  "3839": {
+    "kind": "hint",
+    "task_number": 1,
+    "text": "This is wrong",
+    "query": "SELECT bar, salt_042 as token"
+  },
+  "8968": {
+    "kind": "hint",
+    "task_number": 1,
+    "text": "This is bad",
+    "query": "SELECT bizz, salt_042 as token"
+  }
+}

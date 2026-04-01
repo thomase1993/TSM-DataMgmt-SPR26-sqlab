@@ -1,0 +1,40 @@
+{
+  "042": {
+    "activity_number": 0,
+    "kind": "exercise",
+    "task_number": 1,
+    "section_path": [],
+    "statement": "how?",
+    "salt": "042",
+    "formula": "salt_042 (0) as token",
+    "tweak": "the largest value",
+    "solutions": [
+      {
+        "query": "SELECT foo",
+        "result_head": "",
+        "token": "4547"
+      },
+      {
+        "query": "SELECT bar",
+        "result_head": "",
+        "token": "4547"
+      }
+    ]
+  },
+  "043": {
+    "activity_number": 0,
+    "kind": "exercise",
+    "task_number": 2,
+    "section_path": [],
+    "statement": "how?",
+    "salt": "043",
+    "formula": "salt_043 as token",
+    "solutions": [
+      {
+        "query": "SELECT bizz",
+        "result_head": "",
+        "token": "1278"
+      }
+    ]
+  }
+}

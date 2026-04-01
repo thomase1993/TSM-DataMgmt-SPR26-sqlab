@@ -1,0 +1,168 @@
+{
+  "db_metadata": {
+    "kind": "db_metadata",
+    "title": "SQL Island: The Sequel - Knowhere Black Market",
+    "pitch": "The Milano is stranded on Knowhere. To escape, the player must navigate a broker trade network, compare trade costs, and find the cheapest routes to rare ship parts."
+  },
+
+  "42": {
+    "kind": "episode",
+    "activity_number": 0,
+    "task_number": 1,
+    "salt": "42",
+    "context": "Challenge 1 - The Brokers of Knowhere\n\nYour ship, the Milano, barely survived the crash. The engines are dead, the navigation system is fried, and the hyperdrive core is missing a crucial stabilizer.\n\nA distress signal leads you to Knowhere, a black market colony carved inside the skull of an ancient celestial. If anyone can help you find the missing parts, it is the brokers who trade across this underground network.\n\nA Ravager mechanic named Rax hands you access to the broker registry.\n\n> “Start there. Figure out who's who in this mess.”",
+    "statement": "List all brokers and the parts they currently possess.",
+    "hint": "You do not need a graph query yet. The brokers are stored in a normal table called brokers. Select the broker name and part columns from that table.",
+    "reward": "Nice. Now you know which brokers actually hold parts. But ownership is only half the story on Knowhere.",
+    "formula": "salt_042(sum(nn(b.hash)) OVER ()) AS token",
+    "section": "Challenge 1 - The Brokers of Knowhere",
+    "solutions": [
+      {
+        "token": "520386565",
+        "query": "SELECT b.name, b.part, salt_042(sum(nn(b.hash)) OVER ()) AS token\nFROM brokers b;",
+        "intro": "Rax was right: the registry shows exactly who holds what.",
+        "columns": ["name", "part", "token"]
+      }
+    ]
+  },
+
+  "520386565": {
+    "kind": "episode",
+    "activity_number": 0,
+    "task_number": 1,
+    "salt": "012",
+    "context": "Trade Graph Setup - Knowledge Upgrade!\n\nAfter reviewing the broker registry, Rax opens a hidden market map.\n\n> “Nobody sells direct around here. Everything moves through broker chains.”\n\nTo make sense of the market, you need to model it as a property graph. \n\n IMPORTANT: Before you start querying please enter LOAD duckpgq; ",
+    "statement": "Create the property graph trade_graph using brokers as vertices and trades as edges.",
+    "hint": "Use 'CREATE OR REPLACE PROPERTY GRAPH'. The vertex table is 'brokers', and the edge table is 'trades'. The edge table should reference broker IDs for the source and destination of each trade.",
+    "reward": "The graph is live. Now you can trace the flow of parts through Knowhere's black market.",
+    "formula": "salt_012(sum(nn(t.hash)) OVER ()) AS token",
+    "section": "Graph Setup - Mapping the Black Market",
+    "solutions": [
+      {
+        "token": "956530460",
+        "query": "CREATE OR REPLACE PROPERTY GRAPH IF NOT EXISTS trade_graph\nVERTEX TABLES (brokers)\nEDGE TABLES (\n  trades\n    SOURCE KEY (from_broker_id) REFERENCES brokers (broker_id)\n    DESTINATION KEY (to_broker_id) REFERENCES brokers (broker_id)\n);\n\nSELECT 1 AS graph_ready, salt_012(sum(nn(t.hash)) OVER ()) AS token\nFROM trades t;",
+        "intro": "With the graph created, the market stops looking like chaos and starts looking like a network.",
+        "columns": ["graph_ready", "token"]
+      }
+    ]
+  },
+
+  "956530460": {
+    "kind": "episode",
+    "activity_number": 0,
+    "task_number": 3,
+    "salt": "78",
+    "context": "Challenge 2 - Following the Trades\n\nMost brokers do not hold parts themselves. Instead, they pass goods across a web of trades.\n\nRax shows you a simple graph query and taps one missing detail.\n\n> “Every trade costs credits. If you want to survive in this market, pay attention to the cost.”",
+    "statement": "List all broker-to-broker trades and include the cost of each trade.",
+    "hint": "To access an edge property like cost, give the edge a variable name, such as '[t:TRADES_WITH]', and return 't.cost' in the 'COLUMNS' section.",
+    "reward": "Good. Now the network has prices attached. That is where the real decisions begin.",
+    "formula": "salt_078(sum(nn(a.hash)) OVER ()) AS token",
+    "section": "Challenge 2 - Following the Trades",
+    "solutions": [
+      {
+        "token": "36405126",
+        "query": "SELECT from_broker, to_broker, cost, salt_078(sum(nn(a.hash)) OVER ()) AS token\nFROM GRAPH_TABLE (\n  trade_graph\n  MATCH (a:brokers)-[t:trades]->(b:brokers)\n  COLUMNS (\n    a.name AS from_broker,\n    b.name AS to_broker,\n    t.cost AS cost\n  )\n);",
+        "intro": "Now you can see not just who trades with whom, but how expensive every deal is.",
+        "columns": ["from_broker", "to_broker", "cost", "token"]
+      }
+    ]
+  },
+
+  "36405126": {
+    "kind": "episode",
+    "activity_number": 0,
+    "task_number": 4,
+    "salt": "10",
+    "context": "Challenge 3 - The Ion Thruster Lead\n\nYou overhear a conversation in the market.\n\n> “Kraglin's looking for an Ion Thruster again.”\n> “Yeah, but he doesn't have one. He trades with someone who does.”\n\nRax smirks.\n\n> “Follow the credits, kid. The cheapest deal usually points to the real supplier.”",
+    "statement": "Find the cheapest direct trade leading to a broker who has the Ion Thruster.",
+    "hint": "The supplier must be a broker whose 'part' is ''Ion Thruster''. Filter on the destination broker, then sort by trade cost and keep only the cheapest row.",
+    "reward": "You found the cheapest direct lead. Unfortunately, direct deals on Knowhere are rarely the smartest choice.",
+    "formula": "salt_010(sum(nn(a.hash)) OVER ()) AS token",
+    "section": "Challenge 3 - The Ion Thruster Lead",
+    "solutions": [
+      {
+        "token": "526689464",
+        "query": "SELECT seller, supplier, cost, salt_010(sum(nn(a.hash)) OVER ()) AS token\nFROM GRAPH_TABLE (\n  trade_graph\n  MATCH (a:brokers)-[t:trades]->(b:brokers)\n  WHERE b.part = 'Ion Thruster'\n  COLUMNS (\n    a.name AS seller,\n    b.name AS supplier,\n    t.cost AS cost\n  )\n)\nORDER BY cost\nLIMIT 1;",
+        "intro": "That is the cheapest direct route to the Ion Thruster supplier.",
+        "columns": ["seller", "supplier", "cost", "token"]
+      }
+    ]
+  },
+
+  "526689464": {
+    "kind": "episode",
+    "activity_number": 0,
+    "task_number": 4,
+    "salt": "80",
+    "context": "Challenge 4 - The Middleman Problem\n\nRax looks over the result and shakes his head.\n\n> “Too expensive.”\n> “If you want a better price, you gotta go through a middleman.”\n\nOn Knowhere, parts often move through chains of brokers before reaching a buyer. Sometimes a longer route is cheaper overall.",
+    "statement": "Find two-step trade routes that lead to a broker holding the Plasma Regulator.",
+    "hint": "Use a chain pattern with two edges: '(a)-[t1]->(b)-[t2]->(c)'. The final broker should have 'part = 'Plasma Regulator''. Add the edge costs together to get the total route cost.",
+    "reward": "Now you are thinking like a real trader. Middlemen take a cut, but the total can still come out cheaper.",
+    "formula": "salt_080(sum(nn(a.hash)) OVER ()) AS token",
+    "section": "Challenge 4 - The Middleman Problem",
+    "solutions": [
+      {
+        "token": "476376544",
+        "query": "SELECT start, middleman, supplier, total_cost, salt_080(sum(nn(a.hash)) OVER ()) AS token\nFROM GRAPH_TABLE (\n  trade_graph\n  MATCH (a:brokers)-[t1:trades]->(b:brokers)-[t2:trades]->(c:brokers)\n  WHERE c.part = 'Plasma Regulator'\n  COLUMNS (\n    a.name AS start,\n    b.name AS middleman,\n    c.name AS supplier,\n    t1.cost + t2.cost AS total_cost\n  )\n)\nORDER BY total_cost;",
+        "intro": "Two-step routes reveal the hidden bargains buried inside the market chain.",
+        "columns": ["start", "middleman", "supplier", "total_cost", "token"]
+      }
+    ]
+  },
+
+  "476376544": {
+    "kind": "episode",
+    "activity_number": 0,
+    "task_number": 5,
+    "salt": "23",
+    "context": "Challenge 5 - The Flux Coil Trail\n\nA frantic trader shoves past you.\n\n> “Flux coil just moved through the market!”\n\nThe Quantum Flux Coil is rare, volatile, and constantly changing hands.\n\nRax nods toward the graph.\n\n> “Track the brokers connected to whoever holds it. That's your supply chain.”",
+    "statement": "Find brokers connected to the broker holding the Quantum Flux Coil.",
+    "hint": "Use a one-edge graph pattern and filter the destination broker so that 'b.part = 'Quantum Flux Coil''. That will show which brokers trade directly with the current holder.",
+    "reward": "You found the brokers linked to the coil holder. The trail is getting clearer.",
+    "formula": "salt_023(sum(nn(a.hash)) OVER ()) AS token",
+    "section": "Challenge 5 - The Flux Coil Trail",
+    "solutions": [
+      {
+        "token": "945921625",
+        "query": "SELECT broker, coil_holder, salt_023(sum(nn(a.hash)) OVER ()) AS token\nFROM GRAPH_TABLE (\n  trade_graph\n  MATCH (a:brokers)-[:trades]->(b:brokers)\n  WHERE b.part = 'Quantum Flux Coil'\n  COLUMNS (\n    a.name AS broker,\n    b.name AS coil_holder\n  )\n);",
+        "intro": "These brokers are directly connected to the current Quantum Flux Coil holder.",
+        "columns": ["broker", "coil_holder", "token"]
+      }
+    ]
+  },
+
+  "945921625": {
+    "kind": "episode",
+    "activity_number": 0,
+    "task_number": 6,
+    "salt": "45",
+    "context": "Challenge 6 - The Cheapest Route\n\nYou finally know where the Ion Thruster is. But the direct trades are outrageous.\n\nRax lowers his voice.\n\n> “Listen carefully. In this market, the cheapest path is rarely the shortest.”\n\nTo afford the part, you need the lowest-cost chain of trades through the network.",
+    "statement": "Find the lowest-cost trade path to the broker holding the Ion Thruster.",
+    "hint": "This is a path problem, not a single-edge problem. Use 'MATCH SHORTEST_PATH' with a repeated trade edge like '[t:trades*]', then sum the costs across the path with 'SUM(t.cost)'.",
+    "reward": "That is it — the real cheapest route through Knowhere. You finally have a way to get the part without going broke.",
+    "formula": "salt_045(sum(nn(a.hash)) OVER ()) AS token",
+    "section": "Challenge 6 - The Cheapest Route",
+    "solutions": [
+      {
+        "token": "299810560",
+        "query": "SELECT start, destination, total_cost, salt_045(sum(nn(a.hash)) OVER ()) AS token\nFROM GRAPH_TABLE (\n  trade_graph\n  MATCH SHORTEST_PATH (a:brokers)-[t:trades*]->(b:brokers)\n  WHERE b.part = 'Ion Thruster'\n  COLUMNS (\n    a.name AS start,\n    b.name AS destination,\n    SUM(t.cost) AS total_cost\n  )\n);",
+        "intro": "The market finally gives up its secret: the cheapest path, not the shortest-looking one.",
+        "columns": ["start", "destination", "total_cost", "token"]
+      }
+    ]
+  },
+
+  "299810560": {
+    "kind": "episode",
+    "activity_number": 0,
+    "task_number": 7,
+    "salt": "208",
+    "context": "Final Scene - Escape from Knowhere\n\nWith the cheapest trade routes mapped, you secure the Ion Thruster, Plasma Regulator, and Quantum Flux Coil. Rax helps you install them into the Milano.\n\nThe engines roar back to life.\n\n> “Not bad, kid.”\n> “You just navigated the most complicated trade network in the galaxy.”\n\nAs the Milano lifts off from Knowhere, the console flashes one final status update:\n\n> Ship status: Fully operational\n> Destination: Open space",
+    "statement": "",
+    "hint": "",
+    "reward": "",
+    "formula": "",
+    "section": "Final Scene - Escape from Knowhere",
+    "solutions": []
+  }
+}

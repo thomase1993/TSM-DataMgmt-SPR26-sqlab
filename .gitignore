@@ -1,0 +1,9 @@
+.DS_Store
+__pycache__/
+secrets.py
+dist/
+*.amdc
+*.amdn
+update_outputs.sh
+.ipynb_checkpoints/
+.idea/
