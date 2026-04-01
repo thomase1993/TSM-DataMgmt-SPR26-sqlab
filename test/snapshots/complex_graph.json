@@ -1,0 +1,201 @@
+{
+  "001": {
+    "activity_number": 1,
+    "kind": "episode",
+    "task_number": 1,
+    "section_path": [],
+    "context": "First episode of one adventure",
+    "statement": "how 001?",
+    "salt": "001",
+    "formula": "salt_001 as token",
+    "solutions": [
+      {
+        "query": "SELECT r1002a",
+        "result_head": "",
+        "token": "1002"
+      },
+      {
+        "query": "SELECT r1002b",
+        "result_head": "",
+        "token": "1002"
+      },
+      {
+        "query": "SELECT r2002",
+        "result_head": "",
+        "token": "2002"
+      },
+      {
+        "query": "SELECT r2003",
+        "result_head": "",
+        "token": "2003"
+      },
+      {
+        "query": "SELECT r1002c",
+        "result_head": "",
+        "token": "1002"
+      }
+    ]
+  },
+  "1002": {
+    "activity_number": 1,
+    "kind": "episode",
+    "task_number": 2,
+    "section_path": [],
+    "context": "blah blah",
+    "statement": "how 002?",
+    "salt": "002",
+    "formula": "salt_002 as token",
+    "solutions": [
+      {
+        "query": "SELECT r1003a",
+        "result_head": "",
+        "token": "1003"
+      },
+      {
+        "query": "SELECT r2004",
+        "result_head": "",
+        "token": "2004"
+      },
+      {
+        "query": "SELECT r1003b",
+        "result_head": "",
+        "token": "1003"
+      }
+    ]
+  },
+  "2002": {
+    "activity_number": 1,
+    "kind": "episode",
+    "task_number": 2,
+    "section_path": [],
+    "context": "blah blah",
+    "statement": "how 002?",
+    "salt": "002",
+    "formula": "salt_002 as token",
+    "solutions": [
+      {
+        "query": "SELECT r1003a",
+        "result_head": "",
+        "token": "1003"
+      },
+      {
+        "query": "SELECT r2004",
+        "result_head": "",
+        "token": "2004"
+      },
+      {
+        "query": "SELECT r1003b",
+        "result_head": "",
+        "token": "1003"
+      }
+    ]
+  },
+  "1003": {
+    "activity_number": 1,
+    "kind": "episode",
+    "task_number": 3,
+    "section_path": [],
+    "context": "blah blah",
+    "statement": "how 003?",
+    "salt": "003",
+    "formula": "salt_003 as token",
+    "solutions": [
+      {
+        "query": "SELECT r1004",
+        "result_head": "",
+        "token": "1004"
+      }
+    ]
+  },
+  "2003": {
+    "activity_number": 1,
+    "kind": "episode",
+    "task_number": 3,
+    "section_path": [],
+    "context": "blah blah",
+    "statement": "how 003?",
+    "salt": "003",
+    "formula": "salt_003 as token",
+    "solutions": [
+      {
+        "query": "SELECT r1004",
+        "result_head": "",
+        "token": "1004"
+      }
+    ]
+  },
+  "0102": {
+    "kind": "hint",
+    "task_number": 3,
+    "text": "Wrong",
+    "query": "SELECT r0102, salt_003 as token"
+  },
+  "0202": {
+    "kind": "hint",
+    "task_number": 3,
+    "text": "Bad",
+    "query": "SELECT r0202, salt_003 as token"
+  },
+  "1004": {
+    "activity_number": 1,
+    "kind": "episode",
+    "task_number": 4,
+    "section_path": [],
+    "context": "End of one adventure",
+    "statement": "no question asked!",
+    "salt": "004",
+    "solutions": []
+  },
+  "2004": {
+    "activity_number": 1,
+    "kind": "episode",
+    "task_number": 4,
+    "section_path": [],
+    "context": "End of one adventure",
+    "statement": "no question asked!",
+    "salt": "004",
+    "solutions": []
+  },
+  "011": {
+    "activity_number": 2,
+    "kind": "episode",
+    "task_number": 1,
+    "section_path": [],
+    "context": "First episode of another adventure",
+    "statement": "how?",
+    "salt": "011",
+    "formula": "salt_011 as token",
+    "solutions": [
+      {
+        "query": "SELECT r1012",
+        "result_head": "",
+        "token": "1012"
+      },
+      {
+        "query": "SELECT r1013",
+        "result_head": "",
+        "token": "1013"
+      }
+    ]
+  },
+  "1012": {
+    "activity_number": 2,
+    "kind": "episode",
+    "task_number": 2,
+    "section_path": [],
+    "context": "End of another adventure",
+    "statement": "no question asked either!",
+    "salt": "012",
+    "solutions": []
+  },
+  "1013": {
+    "activity_number": 2,
+    "kind": "episode",
+    "task_number": 3,
+    "section_path": [],
+    "context": "Alternative end of another adventure",
+    "statement": "no question asked either!",
+    "salt": "013",
+    "solutions": []
+  }
+}
