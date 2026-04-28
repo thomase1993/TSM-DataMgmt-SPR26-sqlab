@@ -1,0 +1,10 @@
+token	activity	source	target	action	salt
+42	0	0	1	enter	N/A
+520386565	0	0	1	enter	N/A
+956530460	0	1	2	move	012
+520386565	0	1	2	move	42
+36405126	0	3	4	move	78
+526689464	0	4	5	move	10
+476376544	0	4	5	move	80
+945921625	0	5	6	move	23
+299810560	0	6	0	move	45

@@ -1,0 +1,8 @@
+  Question 1 (42): 'List all brokers and the parts they currently possess.'
+  Question 1 (520386565): 'Create the property graph trade_graph using brokers as vertices and trades as edges.'
+  Question 3 (956530460): 'List all broker-to-broker trades and include the cost of each trade.'
+  Question 4 (36405126): 'Find the cheapest direct trade leading to a broker who has the Ion Thruster.'
+  Question 4 (526689464): 'Find two-step trade routes that lead to a broker holding the Plasma Regulator.'
+  Question 5 (476376544): 'Find brokers connected to the broker holding the Quantum Flux Coil.'
+  Question 6 (945921625): 'Find the lowest-cost trade path to the broker holding the Ion Thruster.'
+  Question 7 (299810560): ''

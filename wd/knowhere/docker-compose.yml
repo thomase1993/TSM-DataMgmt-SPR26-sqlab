@@ -1,8 +1,10 @@
+name: knowhere-tsm
+
 services:
   web:
     build: ./web
     ports:
-      - "8080:8080"
+      - "8081:8080"
     volumes:
       - ./output/dump.sql:/app/dump.sql:ro
       - ./records.json:/app/records.json:ro

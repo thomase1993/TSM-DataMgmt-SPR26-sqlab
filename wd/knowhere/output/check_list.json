@@ -1,0 +1,65 @@
+[
+  {
+    "id": "0-1-0",
+    "query": "SELECT b.name, b.part, salt_042(sum(nn(b.hash)) OVER ()) AS token FROM brokers b;",
+    "formula": "salt_042(sum(nn(b.hash)) OVER ()) AS token",
+    "columns": [ "name", "part", "token" ],
+    "tweak": null,
+    "kind": "solution",
+    "token": "520386565"
+  },
+  {
+    "id": "0-1-0",
+    "query": "CREATE OR REPLACE PROPERTY GRAPH IF NOT EXISTS trade_graph VERTEX TABLES (brokers) EDGE TABLES ( trades SOURCE KEY (from_broker_id) REFERENCES brokers (broker_id) DESTINATION KEY (to_broker_id) REFERENCES brokers (broker_id) ); SELECT 1 AS graph_ready, salt_012(sum(nn(t.hash)) OVER ()) AS token FROM trades t;",
+    "formula": "salt_012(sum(nn(t.hash)) OVER ()) AS token",
+    "columns": [ "graph_ready", "token" ],
+    "tweak": null,
+    "kind": "solution",
+    "token": "956530460"
+  },
+  {
+    "id": "0-3-0",
+    "query": "SELECT from_broker, to_broker, cost, salt_078(sum(nn(a.hash)) OVER ()) AS token FROM GRAPH_TABLE ( trade_graph MATCH (a:brokers)-[t:trades]->(b:brokers) COLUMNS ( a.name AS from_broker, b.name AS to_broker, t.cost AS cost ) );",
+    "formula": "salt_078(sum(nn(a.hash)) OVER ()) AS token",
+    "columns": [ "from_broker", "to_broker", "cost", "token" ],
+    "tweak": null,
+    "kind": "solution",
+    "token": "36405126"
+  },
+  {
+    "id": "0-4-0",
+    "query": "SELECT seller, supplier, cost, salt_010(sum(nn(a.hash)) OVER ()) AS token FROM GRAPH_TABLE ( trade_graph MATCH (a:brokers)-[t:trades]->(b:brokers) WHERE b.part = 'Ion Thruster' COLUMNS ( a.name AS seller, b.name AS supplier, t.cost AS cost ) ) ORDER BY cost LIMIT 1;",
+    "formula": "salt_010(sum(nn(a.hash)) OVER ()) AS token",
+    "columns": [ "seller", "supplier", "cost", "token" ],
+    "tweak": null,
+    "kind": "solution",
+    "token": "526689464"
+  },
+  {
+    "id": "0-4-0",
+    "query": "SELECT start, middleman, supplier, total_cost, salt_080(sum(nn(a.hash)) OVER ()) AS token FROM GRAPH_TABLE ( trade_graph MATCH (a:brokers)-[t1:trades]->(b:brokers)-[t2:trades]->(c:brokers) WHERE c.part = 'Plasma Regulator' COLUMNS ( a.name AS start, b.name AS middleman, c.name AS supplier, t1.cost + t2.cost AS total_cost ) ) ORDER BY total_cost;",
+    "formula": "salt_080(sum(nn(a.hash)) OVER ()) AS token",
+    "columns": [ "start", "middleman", "supplier", "total_cost", "token" ],
+    "tweak": null,
+    "kind": "solution",
+    "token": "476376544"
+  },
+  {
+    "id": "0-5-0",
+    "query": "SELECT broker, coil_holder, salt_023(sum(nn(a.hash)) OVER ()) AS token FROM GRAPH_TABLE ( trade_graph MATCH (a:brokers)-[:trades]->(b:brokers) WHERE b.part = 'Quantum Flux Coil' COLUMNS ( a.name AS broker, b.name AS coil_holder ) );",
+    "formula": "salt_023(sum(nn(a.hash)) OVER ()) AS token",
+    "columns": [ "broker", "coil_holder", "token" ],
+    "tweak": null,
+    "kind": "solution",
+    "token": "945921625"
+  },
+  {
+    "id": "0-6-0",
+    "query": "SELECT start, destination, total_cost, salt_045(sum(nn(a.hash)) OVER ()) AS token FROM GRAPH_TABLE ( trade_graph MATCH SHORTEST_PATH (a:brokers)-[t:trades*]->(b:brokers) WHERE b.part = 'Ion Thruster' COLUMNS ( a.name AS start, b.name AS destination, SUM(t.cost) AS total_cost ) );",
+    "formula": "salt_045(sum(nn(a.hash)) OVER ()) AS token",
+    "columns": [ "start", "destination", "total_cost", "token" ],
+    "tweak": null,
+    "kind": "solution",
+    "token": "299810560"
+  }
+]
