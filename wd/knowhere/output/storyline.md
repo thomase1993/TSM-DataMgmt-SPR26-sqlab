@@ -31,6 +31,8 @@ After reviewing the broker registry, Rax pulls up a hidden market map and grins.
 
 The broker data has already been wired up into a property graph called trade_graph. Brokers are the vertices and trades are the edges between them.
 
+Quick schema map: brokers has id, name, part, extra_part_1, extra_part_2, compromised, and hash. trades has source_id, target_id, cost, and hash. In trade_graph, brokers are Broker vertices and trades are TRADES_WITH edges.
+
 Rax taps the map.
 
 > "Take a look. See who is connected to whom."
@@ -121,7 +123,7 @@ Rax leans closer.
 
 Sometimes the best deal is direct. Sometimes it goes through one broker. Sometimes it takes two.
 
-To afford the part, you need to compare possible trade routes and find the one with the lowest total cost. 
+To afford the part, you need to compare possible trade routes and find the one with the lowest total cost. Do not use ANY SHORTEST here: it minimizes hop count, not the sum of trades.cost. 
 
  > 🚀 The documentation is like the Milano's navigation system — you only appreciate it after everything has gone catastrophically wrong and you are drifting in deep space wondering where it all went wrong.
 
@@ -130,6 +132,8 @@ To afford the part, you need to compare possible trade routes and find the one w
 
 
 Challenge - The Elder Roots
+
+This challenge uses a second graph: groot_lineage_graph. It maps flora_colossi rows as Colossus vertices and lineage rows as DESCENDS_FROM edges from descendant to ancestor.
 
 Groot learns that the coordinates to a hidden refuge were passed down through the oldest Flora Colossi. To find them, he must climb the living lineage one elder at a time.
 
@@ -147,7 +151,7 @@ Rocket pulls you aside behind a crate of Yaka Arrows.
 
 > "Sovereign spies are embedded in the network. Three brokers are feeding our route data straight to the Golden fleet. One wrong hop and we're dead."
 
-Gamora hands you a list of compromised brokers. The flag is already in the registry.
+Gamora hands you a list of compromised brokers. The flag is already in the registry: brokers.compromised = 0 means safe, non-zero means compromised.
 
 <details><summary>Statement</summary>Find the shortest trade path from Kraglin to the broker holding the Ion Thruster, avoiding all compromised brokers along the way.<br><br>
 </details><br>
