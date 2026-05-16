@@ -66,7 +66,7 @@ FROM GRAPH_TABLE (
 
 ### Episode 3
 
-**Token.** 602851986.
+**Token.** 608382728.
 
 Find the cheapest direct trade leading to a broker who has the Ion Thruster.
 
@@ -94,7 +94,7 @@ LIMIT 1;
 
 ### Episode 4
 
-**Token.** 493505536.
+**Token.** 770865152.
 
 Find two-step trade routes that lead to a broker holding the Plasma Regulator.
 
@@ -123,7 +123,7 @@ ORDER BY total_cost;
 
 ### Episode 5
 
-**Token.** 883767558.
+**Token.** 831999960.
 
 Find brokers connected to the broker holding the Quantum Flux Coil.
 
@@ -147,7 +147,7 @@ FROM GRAPH_TABLE (
 
 ### Episode 6
 
-**Token.** 945921625.
+**Token.** 509148750.
 
 Find the cheapest trade route of any length leading to a broker holding the Ion Thruster.
 
@@ -184,11 +184,11 @@ FROM (
 
 ### Episode 7
 
-**Token.** 915806025.
+**Token.** 211228316.
 
 Find the shortest ancestral path from Groot to the elder whose title is 'Keeper of Coordinates', and return how many generations away that elder is.
 
-**Formula**. `salt_046(sum(nn(e.hash)) OVER ()) AS token`
+**Formula**. `salt_046(sum(nn(_hash)) OVER ()) AS token`
 
 The living memory surfaces: a lineage path traced root by root until the elder who knows the way.
 
@@ -216,7 +216,7 @@ FROM GRAPH_TABLE (
 
 Find the shortest trade path from Kraglin to the broker holding the Ion Thruster, avoiding all compromised brokers along the way.
 
-**Formula**. `salt_086(sum(nn(b.hash)) OVER ()) AS token`
+**Formula**. `salt_086(sum(nn(_hash)) OVER ()) AS token`
 
 The Sovereign can't intercept what they can't see. The safe path surfaces.
 
